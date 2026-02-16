@@ -1,4 +1,5 @@
-
+#                       Model By: Ravindra Shende 
+#                      Contact: Ravindrashende02@gmail.com
 ########################################## File import ######################################################################
 includeFile = GMedPlus_Ir192Source.txt                 # parent may need to define in source file 
 includeFile = HUtoMaterialSchneider.txt 

@@ -183,7 +183,7 @@ dv:Tf/rotationZ/Values		   = 14 0 0 0 0 0 0 0 0 0 0 0 0 0 0 deg
 d:Tf/rotationZ/RepetitionInterval = 14 s
 
 ###################################################  Dose scoring geometry   ####################################################################################
-s:Ge/Patient/CloneRTDoseGridFrom 	      = Ge/Patient/DicomDirectory + "/RD.BMC0023303.TPSFinal.dcm"
+s:Ge/Patient/CloneRTDoseGridFrom 	      = Ge/Patient/DicomDirectory + "/RD.PatientCT.TPSFinal.dcm"
 
 ######################################################## Dose scoring geomety ####################################################################################
 s:Sc/DoseToTLE/Quantity                  	= "TrackLengthEstimator"

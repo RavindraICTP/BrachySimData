@@ -1,0 +1,241 @@
+
+########################################## File import ######################################################################
+includeFile = GMedPlus_Ir192Source.txt                 # parent may need to define in source file 
+includeFile = HUtoMaterialSchneider.txt 
+
+s:Ge/Capsule/Parent 			= "Patient" 	#"World"  #"Patient"
+########################################## HU to material conversion Schneider ###############################################
+s:Ge/Patient/HUtoMaterialConversionMethod 		= "Schneider"
+b:Ge/Patient/SchneiderUserVariableDensityMateials 	= "True"
+
+############################################## Parallel world ################################################################
+b:Ge/Capsule/IsParallel 		= "True"
+b:Ge/CapsuleCylinder/IsParallel 	= "True"
+b:Ge/ActiveCylinder/IsParallel 	= "True"
+b:Ge/AirFilling/IsParallel 		= "True"
+b:Ge/Capsulecap/IsParallel 		= "True"
+b:Ge/Cable/IsParallel 			= "True"
+
+s:Ge/Capsule/ParallelWorldName	= "CapsuleWorld" 
+s:Ge/CapsuleCylinder/ParallelWorldName = "CapsuleWorld" 
+s:Ge/ActiveCylinder/ParallelWorldName	= "CapsuleWorld" 
+s:Ge/AirFilling/ParallelWorldName	= "CapsuleWorld" 
+s:Ge/Capsulecap/ParallelWorldName	= "CapsuleWorld" 
+s:Ge/Cable/ParallelWorldName		= "CapsuleWorld" 
+
+############################################## Layered mass geometry ########################################################
+sv:Ph/Default/LayeredMassGeometryWorlds = 1 "CapsuleWorld"   
+
+##########################################  World define ####################################################################
+s:Ge/World/Material  	= "Air"	#"Vacuum"	#"Air" 
+d:Ge/World/HLX       	= 50 cm
+d:Ge/World/HLY       	= 50 cm
+d:Ge/World/HLZ       	= 50 cm
+d:Ge/World/TransX   	 = 0. m
+d:Ge/World/TransY   	 = 0. m
+d:Ge/World/TransZ   	 = 0. m
+d:Ge/World/RotX     	 = 0. deg
+d:Ge/World/RotY     	 = 0. deg
+d:Ge/World/RotZ     	 = 0. deg					
+s:Ge/World/DrawingStyle = "WireFrame"
+s:Ge/World/Color 	 = "White"
+b:Ge/World/Invisible    = "False"
+
+########################################  Patient CT import ##################################################################
+s:Ge/PatientGroup/Type          = "Group"
+s:Ge/PatientGroup/Parent        = "World"
+s:Ge/Patient/Type               = "TsDicomPatient"
+s:Ge/Patient/Parent             = "PatientGroup"		#"PatientGroup"
+s:Ge/Patient/Material           = "G4_WATER"
+dc:Ge/Patient/TransX            = 0 cm	#-0.05 cm
+dc:Ge/Patient/TransY            = 0 cm 	#2.55 cm 		# -0.1  cm
+dc:Ge/Patient/TransZ            = 0 cm	#-0.4 cm		# -0.3  cm
+d:Ge/Patient/RotX               = 180. deg    	# 180 to rotate phantom and arrange co-ordinate system relative to TPS  # 1st 90 # 
+d:Ge/Patient/RotY               = 0. deg
+d:Ge/Patient/RotZ               = 0. deg
+s:Ge/Patient/DicomDirectory     = "BMC0023303"       # my patient folder
+sv:Ge/Patient/DicomModalityTags = 1 "CT"
+                                             
+dc:Ge/Patient/DicomOriginX  	= 0  cm #-1.19   cm #-1.19    cm  
+dc:Ge/Patient/DicomOriginY  	= 0  cm # 13.84  cm #-87.21   cm  	 
+dc:Ge/Patient/DicomOriginZ  	= 0  cm #-87.21  cm # 13.84   cm   
+
+ic:Ge/Patient/RestrictVoxelsXMin = 100	#100	#200 #final 100 # X and Y set indipendently to set area of interest
+ic:Ge/Patient/RestrictVoxelsYMin = 200	#100	#200 #final 200
+ic:Ge/Patient/RestrictVoxelsXMax = 395	#800	#400 #final 395
+ic:Ge/Patient/RestrictVoxelsYMax = 390	#800	#400 #final 390
+
+#iv:Ge/Patient/ShowSpecificSlicesX = 1 -1	
+#iv:Ge/Patient/ShowSpecificSlicesY = 1 -1	
+iv:Ge/Patient/ShowSpecificSlicesZ = 1 -1 # 17 25 # 1 -1  	# 3 17 24  16 17 18   Number of sclices and thire number 
+
+#b:Ge/Patient/DumpImagingValues   = "True"
+#b:Ge/Patient/PreLoadAllMaterials = "True"
+
+#########################################TG186 Material assignment ###################################################################
+#sv:Ma/TG186Water/Components	= 2 "Hydrogen" "Oxygen" 			#TG186Water
+#uv:Ma/TG186Water/Fractions	= 2 0.112 0.888 				#TG186Water
+#d:Ma/TG186Water/Density	= 1.0 g/cm3					#TG186Water
+
+#sv:Ma/SS316LApplicator/Components = 7 "Phosphorus" "Carbon" "Silicon" "Manganese" "Nickel" "Chromium" "Iron"
+#uv:Ma/SS316LApplicator/Fractions  = 7 0.00045 0.0008 0.01 0.02 0.095 0.19 0.68375
+#d:Ma/SS316LApplicator/Density     = 8.0 g/cm3
+
+#sv:Ma/Lucite_PMMA/Components = 3 "Hydrogen" "Carbon" "Oxygen"
+#uv:Ma/Lucite_PMMA/Fractions = 3 0.080538 0.599848 0.319614
+#d:Ma/Lucite_PMMA/Density = 1.190 g/cm3
+
+#sv:Ma/TG186CorticalBone/Components = 9 "Hydrogen" "Carbon" "Nitrogen" "Oxygen" "Sodium" "Magnesium" "Phosphorus" "Sulfur" "Calcium"  #TG186CorticalBone
+#uv:Ma/TG186CorticalBone/Fractions = 9 0.034 0.155 0.042 0.435 0.001 0.002 0.103 0.003 0.225  				  	#TG186CorticalBone
+#d:Ma/TG186CorticalBone/Density    = 1.92 g/cm3										  	#TG186CorticalBone
+
+#sv:Ma/TG186MeanFemaleSoftTissue/Components = 9 "Hydrogen" "Carbon" "Nitrogen" "Oxygen" "Sodium"  "Phosphorus" "Sulfur" "Calcium" "potassium"  	#TG186CorticalBone
+#uv:Ma/TG186MeanFemaleSoftTissue/Fractions  = 9 0.106 0.315 0.024 0.547 0.001 0.002 0.002 0.001 0.002  				  		#TG186CorticalBone
+#d:Ma/TG186MeanFemaleSoftTissue/Density     = 1.02 g/cm3										  		#TG186CorticalBone
+
+#sv:Ma/TG186Bladder/Components = 9 "Hydrogen" "Carbon" "Nitrogen" "Oxygen" "Sodium"  "Phosphorus" "Sulfur" "Calcium" "potassium"  	#TG186Bladder
+#uv:Ma/TG186Bladder/Fractions  = 9 0.105 0.096 0.026 0.761 0.002 0.002 0.002  0.003 0.003   				  		#TG186Bladder
+#d:Ma/TG186Bladder/Density     = 1.04 g/cm3										  		#TG186Bladder
+
+#sv:Ma/TG186Rectum/Components = 9 "Hydrogen" "Carbon" "Nitrogen" "Oxygen" "Sodium"  "Phosphorus" "Sulfur" "Calcium" "potassium"  	#TG186Bladder
+#uv:Ma/TG186Rectum/Fractions  = 9 0.104 0.139 0.029 0.721 0.001 0.001 0.002 0.001 0.002  				  		#TG186Bladder
+#d:Ma/TG186Rectum/Density     = 1.05 g/cm3										  		#TG186Bladder
+
+#s:Ge/Patient/ImagingToMaterialConverter = "MaterialTagNumber"
+#iv:Ge/Patient/MaterialTagNumbers 	 = 11 0 1 2 3 4 5 6 7 8 9 -1000 
+#sv:Ge/Patient/MaterialNames 		 = 11 "TG186Water"  "TG186Water"  "TG186CorticalBone" "TG186Bladder" "TG186MeanFemaleSoftTissue" "TG186Rectum" "SS316LApplicator" "SS316LApplicator" "SS316LApplicator" "Lucite_PMMA" "Lucite_PMMA" "Air" 
+sv:Ge/Patient/ColorByRTStructNames 	 = 11 "BODY" "Origin"  "Bones" "Bladder" "HRCTV" "Rectum" "Central_Tendam" "Lt_Applicator" "Rt_Applicator" "Lt_Ovoid" "Rt_Ovoid" 
+sv:Ge/Patient/ColorByRTStructColors 	 = 11 "green" "yellow"  "white"  "blue"  "red" "grey" "pink"  "yellow" "blue"  "blue" "yellow"			
+
+######################################################## Physics Modeule  #######################################################
+s:Ph/Default/Type     = "Geant4_Modular"
+sv:Ph/Default/Modules = 1 "g4em-standard_opt4" 	#"g4h-phy_QGSP_BIC_HP" "g4decay" "g4ion-binarycascade" "g4h-elastic_HP" "g4stopping" 
+
+###################################################### Threshold parameter#######################################################
+#d:Ph/Default/EMRangeMin 		= 100. eV
+#d:Ph/Default/EMRangeMax 		= 500. MeV
+#d:Ph/Default/CutForAllParticles 	= 0.05 mm 	# single range cut to use for all particles
+#d:Ph/Default/CutForGamma 		= 0.05 mm 	# overrides CutForAllParticles for Gamma
+#d:Ph/Default/CutForElectron 		= 0.05 mm 	# overrides CutForAllParticles for Electron
+#d:Ph/Default/CutForPositron 		= 0.05 mm 	# overrides CutForAllParticles for Positron
+#d:Ph/Default/SetProductionCutLowerEdge = 200 eV
+#d:Ph/Default/SetProductionCutHighEdge = 30 MeV
+
+#################################################### TIME FEATURES: DWELL POSITIONS AND "TIMES" #################################
+dc:Ge/Capsule/TransX = Tf/PositionX/Value + 0 cm   # x= 11.4258 mm  dicom y and z cordinate are reverse to aligne with TPS coordinate 
+dc:Ge/Capsule/TransY = Tf/PositionY/Value + 0 cm   # y= 137.623 mm  
+dc:Ge/Capsule/TransZ = Tf/PositionZ/Value + 0 cm   # z= 870.600 mm
+
+dc:Ge/Capsule/RotX   = Tf/rotationX/Value + 0 deg    #180
+dc:Ge/Capsule/RotY   = Tf/rotationY/Value + 0 deg
+dc:Ge/Capsule/RotZ   = Tf/rotationZ/Value + 0 deg
+
+
+d:Tf/TimelineStart 	= 0 s		# simulation start time
+d:Tf/TimelineEnd 	= 14 s		# time of last dwell time 
+i:Tf/NumberOfSequentialTimes = 14 	# number of sequance repeatition 
+i:Tf/Verbosity   	= 2
+
+s:Tf/Histories/Function = "Step"	
+dv:Tf/Histories/Times   = 1 14 s	
+iv:Tf/Histories/Values  = 1 1000000	 #1000000
+#d:Tf/Histories/RepetitionInterval = 14 s
+
+s:Tf/HistoriesWeight/Function = "Step"
+dv:Tf/HistoriesWeight/Times   = 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 s
+
+##### Proportional to dwell times #####
+iv:Tf/HistoriesWeight/Values  = 14  247 369 207 372 137 280 316 253 260 9 310 291 219 226 
+i:Tf/HistoriesProportionalToDwellTimes/Value = Tf/HistoriesWeight/Value * Tf/Histories/Value
+i:So/Source/NumberOfHistoriesInRun = Tf/HistoriesProportionalToDwellTimes/Value
+
+##### X translation #####  Need to reverse y and z coordinate due to different TPS orientation ##############################
+s:Tf/PositionX/Function           = "Step"
+dv:Tf/PositionX/Times             = 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 s
+dv:Tf/PositionX/Values            = 14 0.21 0.18 0.15 0.12 -1.57 -1.56 -1.55 -1.53 -1.51 1.44 1.43 1.41 1.40 1.38  cm #  X TOPAS = X TPS
+d:Tf/PositionX/RepetitionInterval = 14 s
+
+s:Tf/rotationX/Function           = "Step"
+dv:Tf/rotationX/Times		   = 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 s
+dv:Tf/rotationX/Values		   = 14 0 0 0 0 60 60 60 60 50 60 60 60 60 50 deg
+d:Tf/rotationX/RepetitionInterval = 14 s
+
+##### Y translation #####
+s:Tf/PositionY/Function           = "Step"
+dv:Tf/PositionY/Times             = 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 s
+dv:Tf/PositionY/Values            = 14 -0.29 -0.18 -0.08 0.00 1.16 0.7 0.25 -0.21 -0.65 1.24 0.77 0.30 -0.16 -0.60  cm #  Y TOPAS = Z TPS 
+d:Tf/PositionY/RepetitionInterval = 14 s 
+
+s:Tf/rotationY/Function           = "Step"
+dv:Tf/rotationY/Times		   = 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 s
+dv:Tf/rotationY/Values		   = 14 -4.5 -4.5 -4.5 -4.5 -4.5 0 0 0 0 0 0 0 0 0 deg
+d:Tf/rotationY/RepetitionInterval = 14 s   
+
+##### Z translation #####
+s:Tf/PositionZ/Function           = "Step"
+dv:Tf/PositionZ/Times             = 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 s 
+dv:Tf/PositionZ/Values            = 14 1.84 1.36 0.86 0.37 -0.58 -0.79 -0.99 -1.20 -1.43 -0.75 -0.92 -1.09 -1.28 -1.51  cm #  Z TOPAS = Y TPS
+d:Tf/PositionZ/RepetitionInterval = 14 s
+
+s:Tf/rotationZ/Function           = "Step"
+dv:Tf/rotationZ/Times		   = 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 s
+dv:Tf/rotationZ/Values		   = 14 0 0 0 0 0 0 0 0 0 0 0 0 0 0 deg
+d:Tf/rotationZ/RepetitionInterval = 14 s
+
+###################################################  Dose scoring geometry   ####################################################################################
+s:Ge/Patient/CloneRTDoseGridFrom 	      = Ge/Patient/DicomDirectory + "/RD.BMC0023303.TPSFinal.dcm"
+
+######################################################## Dose scoring geomety ####################################################################################
+s:Sc/DoseToTLE/Quantity                  	= "TrackLengthEstimator"
+s:Sc/DoseToTLE/Component                 	= "Patient/RTDoseGrid"			
+s:Sc/DoseToTLE/InputFile                      = "Muen.dat"
+b:Sc/DoseToTLE/OutputToConsole           	= "True"
+s:Sc/DoseToTLE/IfOutputFileAlreadyExists 	= "Overwrite"
+s:Sc/DoseToTLE/OutputType                	= "DICOM"   # "csv"
+b:Sc/DoseToTLE/DICOMOutput32BitsPerPixel 	= "True"
+s:Sc/DoseToTLE/OutputFile 	          	= "3DDoseToTLE"
+sv:Sc/DoseToTLE/OnlyIncludeParticlesNamed     = 2 "gamma" "e-"
+
+############ Dose Point #########################################################################################################################################
+#d:Sc/PointA/DosePerFraction 			= 7.0 Gy
+#i:Sc/PointA/NumberOfFractions 		= 1
+
+######################################################### Computation Modeule ###################################################################################
+i:Ts/NumberOfThreads 		= 0
+i:Ts/Seed			= 0
+
+########################################## If you need log scale...##############################################################################################
+#b:Sc/EnergySpectrum/EBinLog 		= “True”
+
+###################################################### Check for overlap ########################################################################################
+Ge/CheckForOverlaps           	= "True"
+b:Ge/QuitIfOverlapDetected		= "True"
+d:Ge/CheckForOverlapsTolerance       	= 0. mm 
+
+###################################################### Graphics- OPEN GL ########################################################################################
+#s:Gr/ViewA/Type                             	= "OpenGL"
+#i:Gr/ViewA/WindowSizeX                      	= 900
+#i:Gr/ViewA/WindowSizeY                      	= 900
+#dc:Gr/ViewA/Theta                           	= 0 deg
+#dc:Gr/ViewA/Phi                             	= 0 deg
+#s:Gr/ViewA/Projection                       	= "Perspective"
+#d:Gr/ViewA/PerspectiveAngle                 	= 20 deg
+#u:Gr/ViewA/Zoom                             	= 20.
+#b:Gr/ViewA/HiddenLineRemovalForTrajectories 	= "True"
+#b:Gr/ViewA/IncludeAxes                      	= "True"  #"True"		#"False"	#"True" #"True"  # "False" # 
+#s:Gr/ViewA/AxesComponent                    	= "World"			#"Patient"	#"World"
+#d:Gr/ViewA/AxesSize                         	=  2 cm
+#b:Gr/ViewA/CopyOpenGLToEPS     		= "True"
+#b:Gr/ViewA/IncludeTrajectories 		= "True"
+#s:Gr/ViewA/ColorBy      			= "Charge"
+#s:Gr/ViewA/ChargeColors 			= "red green cyan"
+#s:Gr/ViewA/ColorBy      			= "ParticleType"
+#sv:Gr/Myview/ColorByParticleTypeNames      	= 2 "gamma" "e-"
+#sv:Gr/Myview/ColorByParticleTypeColors 	= 2 "Blue" "Red"
+#b:Gr/Enable          				= "True"
+#b:Ts/PauseBeforeQuit 				= "True"
+#Ts/UseQt 					= "True"
+#i:Gr/ShowOnlyOutlineIfVoxelCountExceeds 	= 1000000000
+#i:Ts/ShowHistoryCountAtInterval 		= 100
+###################################################### End of Graphics #####################################################################################
+

@@ -1,0 +1,384 @@
+
+########################################## File import #######################################################################
+########################################## File include ######################################################################
+includeFile = GMedPlus_Ir192Source.txt                 	# GammaMed Plus Ir192 model 
+includeFile = HUtoMaterialSchneider.txt		 	# HU to material density conversion file 
+s:Ge/Patient/HUtoMaterialConversionMethod = "Schneider"
+
+##############################################################################################################################
+#b:Ge/PMMAcylinder/IsParallel 	= "True"
+#b:Ge/PMMAcap/IsParallel 		= "True"
+#b:Ge/Densimet/IsParallel 		= "True"
+#b:Ge/HalfcylinderAir/IsParallel 	= "True"
+#b:Ge/StainlessCylinder/IsParallel 	= "True"
+#b:Ge/AirCylinder/IsParallel 		= "True"
+b:Ge/Cable/IsParallel 			= "True"
+b:Ge/Capsulecap/IsParallel 		= "True"
+b:Ge/CapsuleCylinder/IsParallel 	= "True"
+b:Ge/AirFilling/IsParallel 		= "True"
+b:Ge/ActiveCylinder/IsParallel 	= "True"
+b:Ge/Dose@1cmXRT/IsParallel 		= "True"
+b:Ge/Dose@2cmXRT/IsParallel 		= "True"
+b:Ge/Dose@3cmXRT/IsParallel 		= "True"
+b:Ge/Dose@1cmYRT/IsParallel 		= "True"
+b:Ge/Dose@2cmYRT/IsParallel 		= "True"
+b:Ge/Dose@3cmYRT/IsParallel 		= "True"
+
+##########################################  World define ####################################################################
+s:Ge/World/Material  	= "Vacuum"
+d:Ge/World/HLX       	= 0.5 m
+d:Ge/World/HLY       	= 0.5 m
+d:Ge/World/HLZ       	= 0.5 m
+d:Ge/World/TransX   	 = 0. m
+d:Ge/World/TransY   	 = 0. m
+d:Ge/World/TransZ   	 = 0. m
+d:Ge/World/RotX     	 = 0. deg
+d:Ge/World/RotY     	 = 0. deg
+d:Ge/World/RotZ     	 = 0. deg					
+s:Ge/World/DrawingStyle = "WireFrame"
+s:Ge/World/Color 	 = "White"
+b:Ge/World/Invisible    = "False"
+
+#####################################  Water phantom for dose grid #####################################################
+#s:Ge/Water_phantom/Type     = "TsBox"
+#s:Ge/Water_phantom/Material = "G4_WATER"
+#s:Ge/Water_phantom/Parent   = "World"
+#d:Ge/Water_phantom/HLX      = 10. cm
+#d:Ge/Water_phantom/HLY      = 10. cm
+#d:Ge/Water_phantom/HLZ      = 10. cm
+#d:Ge/Water_phantom/TransX   = 0. m
+#d:Ge/Water_phantom/TransY   = 0. m
+#d:Ge/Water_phantom/TransZ   = 0. m
+#d:Ge/Water_phantom/RotX     = 0. deg
+#d:Ge/Water_phantom/RotY     = 0. deg
+#d:Ge/Water_phantom/RotZ     = 0. deg
+#i:Ge/Water_phantom/XBins     = 100
+#i:Ge/Water_phantom/YBins     = 100
+#i:Ge/Water_phantom/ZBins     = 100
+
+########################################  Patient CT import ##################################################################
+s:Ge/Patient/Parent             = "World"
+s:Ge/Patient/Material           = "G4_WATER"
+s:Ge/Patient/Type               = "TsDicomPatient"
+dc:Ge/Patient/TransX            = 0  cm
+dc:Ge/Patient/TransY            = 0  cm
+dc:Ge/Patient/TransZ            = 0  cm
+d:Ge/Patient/RotX               = 0. deg    # 180 to rotate phantom and arrange co-ordinate system relative to TPS  # 1st 90 # 
+d:Ge/Patient/RotY               = 0. deg
+d:Ge/Patient/RotZ               = 0. deg
+s:Ge/Patient/DicomDirectory     = "Single_SourcePh"               # my patient folder from TPS
+sv:Ge/Patient/DicomModalityTags = 1 "CT"
+
+######################################## Point Dose measurement ##############################################################                                         
+s:Ge/Dose@1cmXRT/Type   		= "TsBox" 		#"TsBox"   "TsSphere", 
+s:Ge/Dose@1cmXRT/Parent 		= "World"
+s:Ge/Dose@1cmXRT/Material 		= "G4_WATER"
+dc:Ge/Dose@1cmXRT/HLX      		= 0.5 mm 
+dc:Ge/Dose@1cmXRT/HLY      		= 0.5 mm   
+dc:Ge/Dose@1cmXRT/HLZ      		= 0.5 mm 
+dc:Ge/Dose@1cmXRT/TransX   		= 1 cm 
+i:Ge/Dose@1cmXRT/XBin      		= 1      
+i:Ge/Dose@1cmXRT/YBin     		= 1     
+i:Ge/Dose@1cmXRT/ZBin      		= 1      
+s:Ge/Dose@1cmXRT/DrawingStyle 	= "Solid"
+s:Ge/Dose@1cmXRT/Color 	 	= "white" 
+                                            
+s:Ge/Dose@2cmXRT/Type   		= "TsBox" 		#"TsBox"   "TsSphere",                                         
+s:Ge/Dose@2cmXRT/Parent 		= "World"
+s:Ge/Dose@2cmXRT/Material 		= "G4_WATER"
+dc:Ge/Dose@2cmXRT/HLX      		= 0.5 mm 
+dc:Ge/Dose@2cmXRT/HLY      		= 0.5 mm   
+dc:Ge/Dose@2cmXRT/HLZ      		= 0.5 mm 
+dc:Ge/Dose@2cmXRT/TransX   		= 2 cm 
+i:Ge/Dose@2cmXRT/XBin      		= 1      
+i:Ge/Dose@2cmXRT/YBin     		= 1     
+i:Ge/Dose@2cmXRT/ZBin      		= 1      
+s:Ge/Dose@2cmXRT/DrawingStyle 	= "Solid"
+s:Ge/Dose@2cmXRT/Color 	 	= "white"                                
+                                             
+s:Ge/Dose@3cmXRT/Type   		= "TsBox" 		#"TsBox"   "TsSphere",                                                               
+s:Ge/Dose@3cmXRT/Parent 		= "World"
+s:Ge/Dose@3cmXRT/Material 		= "G4_WATER"
+dc:Ge/Dose@3cmXRT/HLX      		= 0.5 mm 
+dc:Ge/Dose@3cmXRT/HLY      		= 0.5 mm   
+dc:Ge/Dose@3cmXRT/HLZ      		= 0.5 mm  
+dc:Ge/Dose@3cmXRT/TransX   		= 3 cm 
+i:Ge/Dose@3cmXRT/XBin      		= 1      
+i:Ge/Dose@3cmXRT/YBin     		= 1     
+i:Ge/Dose@3cmXRT/ZBin      		= 1      
+s:Ge/Dose@3cmXRT/DrawingStyle 	= "Solid"
+s:Ge/Dose@3cmXRT/Color 	 	= "white" 
+                                                                 
+s:Ge/Dose@1cmYRT/Type   		= "TsBox" 		#"TsBox"   "TsSphere", 
+s:Ge/Dose@1cmYRT/Parent 		= "World"
+s:Ge/Dose@1cmYRT/Material 		= "G4_WATER"
+dc:Ge/Dose@1cmYRT/HLX      		= 0.5 mm 
+dc:Ge/Dose@1cmYRT/HLY      		= 0.5 mm   
+dc:Ge/Dose@1cmYRT/HLZ      		= 0.5 mm 
+dc:Ge/Dose@1cmYRT/TransY   		= -1 cm 
+i:Ge/Dose@1cmYRT/XBin      		= 1      
+i:Ge/Dose@1cmYRT/YBin     		= 1     
+i:Ge/Dose@1cmYRT/ZBin      		= 1      
+s:Ge/Dose@1cmYRT/DrawingStyle 	= "Solid"
+s:Ge/Dose@1cmYRT/Color 	 	= "white" 
+                                            
+s:Ge/Dose@2cmYRT/Type   		= "TsBox" 		#"TsBox"   "TsSphere",                                         
+s:Ge/Dose@2cmYRT/Parent 		= "World"
+s:Ge/Dose@2cmYRT/Material 		= "G4_WATER"
+dc:Ge/Dose@2cmYRT/HLX      		= 0.5 mm 
+dc:Ge/Dose@2cmYRT/HLY      		= 0.5 mm   
+dc:Ge/Dose@2cmYRT/HLZ      		= 0.5 mm 
+dc:Ge/Dose@2cmYRT/TransY   		= -2 cm 
+i:Ge/Dose@2cmYRT/XBin      		= 1      
+i:Ge/Dose@2cmYRT/YBin     		= 1     
+i:Ge/Dose@2cmYRT/ZBin      		= 1      
+s:Ge/Dose@2cmYRT/DrawingStyle 	= "Solid"
+s:Ge/Dose@2cmYRT/Color 	 	= "white"                                
+                                             
+s:Ge/Dose@3cmYRT/Type   		= "TsBox" 		#"TsBox"   "TsSphere",                                                               
+s:Ge/Dose@3cmYRT/Parent 		= "World"
+s:Ge/Dose@3cmYRT/Material 		= "G4_WATER"
+dc:Ge/Dose@3cmYRT/HLX      		= 0.5 mm 
+dc:Ge/Dose@3cmYRT/HLY      		= 0.5 mm   
+dc:Ge/Dose@3cmYRT/HLZ      		= 0.5 mm  
+dc:Ge/Dose@3cmYRT/TransY   		= -3 cm 
+i:Ge/Dose@3cmYRT/XBin      		= 1      
+i:Ge/Dose@3cmYRT/YBin     		= 1     
+i:Ge/Dose@3cmYRT/ZBin      		= 1      
+s:Ge/Dose@3cmYRT/DrawingStyle 	= "Solid"
+s:Ge/Dose@3cmYRT/Color 	 	= "white" 
+
+#########################################  Dicom phantom properties #####################################################################                            
+dc:Ge/Patient/DicomOriginX  	= 0   	cm # 0  cm 
+dc:Ge/Patient/DicomOriginY  	= 0 	cm # 0  cm   
+dc:Ge/Patient/DicomOriginZ  	= 0  	cm # 0  cm  
+
+#ic:Ge/Patient/RestrictVoxelsXMin = 200	
+#ic:Ge/Patient/RestrictVoxelsYMin = 200	
+#ic:Ge/Patient/RestrictVoxelsXMax = 400	
+#ic:Ge/Patient/RestrictVoxelsYMax = 400	
+
+#iv:Ge/Patient/ShowSpecificSlicesX = 1 -1
+#iv:Ge/Patient/ShowSpecificSlicesY = 1 -1
+#iv:Ge/Patient/ShowSpecificSlicesZ  = 1 -2  
+
+#b:Ge/Patient/DumpImagingValues   = "True"
+#b:Ge/Patient/PreLoadAllMaterials = "True"
+
+#########################################  CT Material assignment- TG186 ###############################################################
+sv:Ma/TG186Water/Components	= 2 "Hydrogen" "Oxygen" 
+uv:Ma/TG186Water/Fractions	= 2 0.112 0.888 
+d:Ma/TG186Water/Density	= 1.0 g/cm3
+
+s:Ge/Patient/ImagingToMaterialConverter = "MaterialTagNumber"
+iv:Ge/Patient/MaterialTagNumbers 	= 3 0 1 -1000  
+sv:Ge/Patient/MaterialNames 		= 3 "TG186Water"  "TG186Water" "Air" 
+sv:Ge/Patient/ColorByRTStructNames 	= 1 "BODY"  # 
+sv:Ge/Patient/ColorByRTStructColors 	= 1 "green"  #		
+
+######################################################## Physics Modeule  #################################################################
+s:Ph/Default/Type     = "Geant4_Modular"
+sv:Ph/Default/Modules = 6 "g4em-standard_opt4" "g4h-phy_QGSP_BIC_HP" "g4decay" "g4ion-binarycascade" "g4h-elastic_HP" "g4stopping" 
+sv:Ph/Default/LayeredMassGeometryWorlds = 11 "Cable" "Capsulecap" "CapsuleCylinder" "AirFilling" "ActiveCylinder" "Dose@1cmXRT" "Dose@2cmXRT" "Dose@3cmXRT" "Dose@1cmYRT" "Dose@2cmYRT" "Dose@3cmYRT"
+
+#d:Ph/Default/EMRangeMin 	= 100. eV
+#d:Ph/Default/EMRangeMax 	= 500. MeV
+#d:Ph/Default/CutForAllParticles = 0.05 mm 	# single range cut to use for all particles
+#d:Ph/Default/CutForGamma 	= 0.05 mm 	# overrides CutForAllParticles for Gamma
+#d:Ph/Default/CutForElectron 	= 0.05 mm 	# overrides CutForAllParticles for Electron
+#d:Ph/Default/CutForPositron 	= 0.05 mm 	# overrides CutForAllParticles for Positron
+#d:Ph/Default/SetProductionCutLowerEdge = 200 eV
+#d:Ph/Default/SetProductionCutHighEdge = 30 MeV
+
+#################################################### Time feature for single dwell position source ##########################################
+dc:Ge/Capsule/TransX = Tf/PositionX/Value + 0  mm	# 
+dc:Ge/Capsule/TransY = Tf/PositionY/Value + 0  mm	#
+dc:Ge/Capsule/TransZ = Tf/PositionZ/Value + 0  mm 	#
+
+#s:Tf/PositionX/Function           = "Step"
+dv:Tf/PositionX/Values            = 1 0 cm
+dv:Tf/PositionX/Times             = 1 1 s
+
+#s:Tf/PositionY/Function           = "Step"
+dv:Tf/PositionY/Values            = 1 0 cm
+dv:Tf/PositionY/Times             = 1 1 s
+
+#s:Tf/PositionZ/Function           = "Step"
+dv:Tf/PositionZ/Values            = 1 0 cm
+dv:Tf/PositionZ/Times             = 1 1 s
+
+ic:So/Source/NumberOfHistoriesInRun    = 1000000000    # 10E9 Number of histories to run
+
+###################################################  Dose scoring geometry   #################################################################
+s:Ge/Patient/CloneRTDoseGridFrom 	     = Ge/Patient/DicomDirectory + "/RD.TPS_CVS.Single_Sourc.dcm"
+#dv:Ge/Patient/CloneRTDoseGridSize 	     = 3 1 1 1 mm		
+###################################################  Dose scoring geometry   ##################################################################
+#s:Sc/DoseTomedium/Quantity                   = "DoseToMedium"
+#s:Sc/DoseTomedium/Component                  = "Patient/RTDoseGrid" #"Patient/RTDoseGrid"  ; "Water_phantom"
+#b:Sc/DoseTomedium/OutputToConsole            = "True"
+#s:Sc/DoseTomedium/IfOutputFileAlreadyExists  = "Overwrite"
+#s:Sc/DoseTomedium/OutputType                 = "DICOM"   # "csv"
+#b:Sc/DoseTomedium/DICOMOutput32BitsPerPixel  = "True"
+#s:Sc/DoseTomedium/OutputFile 	       = "3DDoseTomedium"
+#sv:Sc/DoseTomedium/OnlyIncludeParticlesNamed  = 2 "gamma" "e-" 
+
+
+s:Sc/DoseTowater/Quantity                   	= "DoseToWater"
+s:Sc/DoseTowater/Component                  	= "Patient/RTDoseGrid"	#"Patient/RTDoseGrid"
+b:Sc/DoseTowater/OutputToConsole            	= "True"
+s:Sc/DoseTowater/IfOutputFileAlreadyExists  	= "Overwrite"
+s:Sc/DoseTowater/OutputType                 	= "DICOM"   # "csv"
+b:Sc/DoseTowater/DICOMOutput32BitsPerPixel  	= "True"
+s:Sc/DoseTowater/OutputFile 	             	= "3DDoseTowater"
+sv:Sc/DoseTowater/OnlyIncludeParticlesNamed   = 2 "gamma" "e-" 
+
+
+s:Sc/DoseToTLE/Quantity                  	= "TrackLengthEstimator"
+s:Sc/DoseToTLE/Component                 	= "Patient/RTDoseGrid"	#"Patient/RTDoseGrid"
+s:Sc/DoseToTLE/InputFile                      = "Muen.dat"
+b:Sc/DoseToTLE/OutputToConsole           	= "True"
+s:Sc/DoseToTLE/IfOutputFileAlreadyExists 	= "Overwrite"
+s:Sc/DoseToTLE/OutputType                	= "DICOM"   # "csv"
+b:Sc/DoseToTLE/DICOMOutput32BitsPerPixel 	= "True"
+s:Sc/DoseToTLE/OutputFile 	          	= "3DDoseToTLE"
+sv:Sc/DoseToTLE/OnlyIncludeParticlesNamed     = 2 "gamma" "e-"
+
+
+s:Sc/Dose@1cmXRT/Quantity                    = "TrackLengthEstimator"
+s:Sc/Dose@1cmXRT/Component 		       = "Dose@1cmXRT" 
+sv:Sc/Dose@1cmXRT/Report                     = 1  "Mean"	#"Sum" 		#"Mean" "Standard_Deviation" 
+s:Sc/Dose@1cmXRT/InputFile                   = "Muen.dat"
+b:Sc/Dose@1cmXRT/OutputToConsole             = "F"
+s:Sc/Dose@1cmXRT/IfOutputFileAlreadyExists   = "Overwrite"
+s:Sc/Dose@1cmXRT/OutputType                  = "csv"
+b:Sc/Dose@1cmXRT/DICOMOutput32BitsPerPixel   = "True"
+s:Sc/Dose@1cmXRT/OutputFile                  = "Dose@1cmXRT"
+sv:Sc/Dose@1cmXRT/OnlyIncludeParticlesNamed  = 2 "gamma" "e-" 
+
+
+s:Sc/Dose@2cmXRT/Quantity                    = "TrackLengthEstimator"
+s:Sc/Dose@2cmXRT/Component 		     	= "Dose@2cmXRT" 
+sv:Sc/Dose@2cmXRT/Report                     = 1  "Mean"	#"Sum" 		#"Mean" "Standard_Deviation" 
+s:Sc/Dose@2cmXRT/InputFile                   = "Muen.dat"
+b:Sc/Dose@2cmXRT/OutputToConsole             = "F"
+s:Sc/Dose@2cmXRT/IfOutputFileAlreadyExists   = "Overwrite"
+s:Sc/Dose@2cmXRT/OutputType                  = "csv"
+b:Sc/Dose@2cmXRT/DICOMOutput32BitsPerPixel   = "True"
+s:Sc/Dose@2cmXRT/OutputFile                  = "Dose@2cmXRT"
+sv:Sc/Dose@2cmXRT/OnlyIncludeParticlesNamed  = 2 "gamma" "e-"
+
+
+s:Sc/Dose@3cmXRT/Quantity                    = "TrackLengthEstimator"
+s:Sc/Dose@3cmXRT/Component 		       = "Dose@3cmXRT" 
+sv:Sc/Dose@3cmXRT/Report                     = 1  "Mean"	#"Sum" 		#"Mean" "Standard_Deviation" 
+s:Sc/Dose@3cmXRT/InputFile                   = "Muen.dat"
+b:Sc/Dose@3cmXRT/OutputToConsole             = "F"
+s:Sc/Dose@3cmXRT/IfOutputFileAlreadyExists   = "Overwrite"
+s:Sc/Dose@3cmXRT/OutputType                  = "csv"
+b:Sc/Dose@3cmXRT/DICOMOutput32BitsPerPixel   = "True"
+s:Sc/Dose@3cmXRT/OutputFile                  = "Dose@3cmXRT"
+sv:Sc/Dose@3cmXRT/OnlyIncludeParticlesNamed  = 2 "gamma" "e-"
+
+
+s:Sc/Dose@1cmYRT/Quantity                    = "TrackLengthEstimator"
+s:Sc/Dose@1cmYRT/Component 		     = "Dose@1cmYRT" 
+sv:Sc/Dose@1cmYRT/Report                     = 1  "Mean"	#"Sum" 		#"Mean" "Standard_Deviation" 
+s:Sc/Dose@1cmYRT/InputFile                   = "Muen.dat"
+b:Sc/Dose@1cmYRT/OutputToConsole             = "F"
+s:Sc/Dose@1cmYRT/IfOutputFileAlreadyExists   = "Overwrite"
+s:Sc/Dose@1cmYRT/OutputType                  = "csv"
+b:Sc/Dose@1cmYRT/DICOMOutput32BitsPerPixel   = "True"
+s:Sc/Dose@1cmYRT/OutputFile                  = "Dose@1cmYRT"
+sv:Sc/Dose@1cmYRT/OnlyIncludeParticlesNamed  = 2 "gamma" "e-"
+
+
+s:Sc/Dose@2cmYRT/Quantity                    = "TrackLengthEstimator"
+s:Sc/Dose@2cmYRT/Component 		     = "Dose@2cmYRT" 
+sv:Sc/Dose@2cmYRT/Report                     = 1  "Mean"	#"Sum" 		#"Mean" "Standard_Deviation" 
+s:Sc/Dose@2cmYRT/InputFile                   = "Muen.dat"
+b:Sc/Dose@2cmYRT/OutputToConsole             = "F"
+s:Sc/Dose@2cmYRT/IfOutputFileAlreadyExists   = "Overwrite"
+s:Sc/Dose@2cmYRT/OutputType                  = "csv"
+b:Sc/Dose@2cmYRT/DICOMOutput32BitsPerPixel   = "True"
+s:Sc/Dose@2cmYRT/OutputFile                  = "Dose@2cmYRT"
+sv:Sc/Dose@2cmYRT/OnlyIncludeParticlesNamed  = 2 "gamma" "e-"
+
+
+s:Sc/Dose@3cmYRT/Quantity                    = "TrackLengthEstimator"
+s:Sc/Dose@3cmYRT/Component 		     = "Dose@3cmYRT" 
+sv:Sc/Dose@3cmYRT/Report                     = 1  "Mean"	#"Sum" 		#"Mean" "Standard_Deviation" 
+s:Sc/Dose@3cmYRT/InputFile                   = "Muen.dat"
+b:Sc/Dose@3cmYRT/OutputToConsole             = "F"
+s:Sc/Dose@3cmYRT/IfOutputFileAlreadyExists   = "Overwrite"
+s:Sc/Dose@3cmYRT/OutputType                  = "csv"
+b:Sc/Dose@3cmYRT/DICOMOutput32BitsPerPixel   = "True"
+s:Sc/Dose@3cmYRT/OutputFile                  = "Dose@3cmYRT"
+sv:Sc/Dose@3cmYRT/OnlyIncludeParticlesNamed  = 2 "gamma" "e-"
+
+
+################################# DVH #####################################################
+
+#s:Sc/DVH_BODY/Quantity                  	= "DoseToMedium"
+#s:Sc/DVH_BODY/Component                 	= "Patient/RTDoseGrid" 
+#s:Sc/DVH_BODY/OutputType  			= "csv" 
+#b:Sc/DVH_BODY/OutputToConsole           	= "TRUE"
+#b:Sc/DVH_BODY/DICOMOutput32BitsPerPixel 	= "True"
+#s:Sc/DVH_BODY/IfOutputFileAlreadyExists 	= "Overwrite"
+#s:Sc/DVH_BODY/OutputFile                    	= "DVH_BODY"
+#sv:Sc/DVH_BODY/RTStructures                 	= 1 "BODY"
+#sv:Sc/DVH_BODY/OnlyIncludeIfInRTStructure 	= 1 "BODY"
+#sv:Sc/DVH_BODY/Report 			= 1 "CumulativeVolumeHistogram"
+#i:Sc/DVH_BODY/HistogramBins             	= 1000
+#d:Sc/DVH_BODY/HistogramMin              	= 0.01 Gy
+#d:Sc/DVH_BODY/HistogramMax              	= 10 Gy
+
+#s:Sc/DVH_HRCTV/Quantity                  	= "DoseToMedium"
+#s:Sc/DVH_HRCTV/Component                 	= "Patient/RTDoseGrid" 
+#s:Sc/DVH_HRCTV/OutputType  			= "csv" 
+#b:Sc/DVH_HRCTV/OutputToConsole           	= "TRUE"
+#b:Sc/DVH_HRCTV/DICOMOutput32BitsPerPixel 	= "True"
+#s:Sc/DVH_HRCTV/IfOutputFileAlreadyExists 	= "Overwrite"
+#s:Sc/DVH_HRCTV/OutputFile                     = "DVH_HRCTV"
+#sv:Sc/DVH_HRCTV/RTStructures                  = 1 "HRCTV"
+#sv:Sc/DVH_HRCTV/OnlyIncludeIfInRTStructure 	= 1 "HRCTV"
+#sv:Sc/DVH_HRCTV/Report 			= 1 "CumulativeVolumeHistogram"
+#i:Sc/DVH_HRCTV/HistogramBins             	= 1000
+#d:Sc/DVH_HRCTV/HistogramMin              	= 0.01 Gy
+#d:Sc/DVH_HRCTV/HistogramMax              	= 10 Gy
+
+######################################################### Computation Modeule ##################################################################
+i:Ts/NumberOfThreads 		= 0
+i:Ts/Seed			= 0
+
+###################################################### Check for overlap ######################################################################
+Ge/CheckForOverlaps           	= "True"
+b:Ge/QuitIfOverlapDetected		= "True"
+d:Ge/CheckForOverlapsTolerance       	= 0. mm 
+
+###################################################### Graphics- OPEN GL ######################################################################
+#s:Gr/ViewA/Type                             	= "OpenGL"
+#i:Gr/ViewA/WindowSizeX                      	= 900
+#i:Gr/ViewA/WindowSizeY                      	= 900
+#dc:Gr/ViewA/Theta                           	= 0 deg
+#dc:Gr/ViewA/Phi                             	= 0 deg
+#s:Gr/ViewA/Projection                       	= "Perspective"
+#d:Gr/ViewA/PerspectiveAngle                 	= 20 deg
+#u:Gr/ViewA/Zoom                             	= 10.
+#b:Gr/ViewA/HiddenLineRemovalForTrajectories 	= "True"
+#b:Gr/ViewA/IncludeAxes                      	= "True"  #"True"		#"False"	#"True" #"True"  # "False" # 
+#s:Gr/ViewA/AxesComponent                    	= "World"
+#d:Gr/ViewA/AxesSize                         	=  20 cm
+#b:Gr/ViewA/CopyOpenGLToEPS     		= "True"
+#b:Gr/ViewA/IncludeTrajectories 		= "True"
+#s:Gr/ViewA/ColorBy      			= "Charge"
+#s:Gr/ViewA/ChargeColors 			= "red green cyan"
+#s:Gr/ViewA/ColorBy      			= "ParticleType"
+#sv:Gr/Myview/ColorByParticleTypeNames      	= 2 "gamma" "e-"
+#sv:Gr/Myview/ColorByParticleTypeColors 	= 2 "Blue" "Red"
+#b:Gr/Enable          				= "True"
+#b:Ts/PauseBeforeQuit 				= "True"
+#Ts/UseQt 					= "True"
+#i:Gr/ShowOnlyOutlineIfVoxelCountExceeds 	= 1000000000
+#i:Ts/ShowHistoryCountAtInterval 		= 100
+###################################################### End of Graphics ##########################################################################
+

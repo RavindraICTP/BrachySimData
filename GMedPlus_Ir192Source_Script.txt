@@ -1,0 +1,119 @@
+#                      Model By: Ravindra                              #
+#                    Ir-192 GammaMed Plus 232 		         #
+#            Modeling of GammaMed Plus Ir192 Source                    #
+
+####################################################### Radioactive Source Defining #########################################################################
+######################################################## Source geometry Material defining ##################################################################
+sv:Ma/CapsuleSteel/Components = 10 "Carbon" "Silicon" "Nitrogen" "Phosphorus" "Sulfur" "Chromium" "Manganese" "Iron" "Nickel" "Molybdenum" 
+uv:Ma/CapsuleSteel/Fractions  = 10  0.0003 0.0075 0.001 0.00045 0.0003 0.17 0.02 0.65545 0.12 0.025
+d:Ma/CapsuleSteel/Density     = 7.8 g/cm3
+
+sv:Ma/CableSteel/Components 	= 9 "Carbon" "Silicon" "Nitrogen" "Phosphorus" "Sulfur" "Chromium" "Manganese" "Iron" "Nickel" 
+uv:Ma/CableSteel/Fractions  	= 9  0.0003 0.01 0.001 0.00045 0.00015 0.18 0.02 0.6981 0.09
+d:Ma/CableSteel/Density     	= 5.6 g/cm3
+
+sv:Ma/G4Air/Components 	= 4  "Carbon"  "Argon"  "Oxygen" "Nitrogen" 
+uv:Ma/G4Air/Fractions  	= 4  0.000124  0.012827  0.231781  0.755268 
+d:Ma/G4Air/Density     	= 1.20479 mg/cm3
+
+#sv:Ma/Air40/Components 	= 5 "Carbon" "Hydrogen" "Argon" "Oxygen" "Nitrogen" 
+#uv:Ma/Air40/Fractions  	= 5 0.000123 0.000732 0.012743 0.236077 0.750325 
+#d:Ma/Air40/Density     	= 1.197 mg/cm3
+
+####################################################### Radioactive Source Defining #########################################################################
+s:Ge/ActiveCylinder/Type          	= "TsCylinder"
+s:Ge/ActiveCylinder/Material      	= "G4_Ir"
+s:Ge/ActiveCylinder/Parent        	= "AirFilling" #"Capsule" 	#"AirFilling"	#"World" # "AirFilling"
+d:Ge/ActiveCylinder/RMin          	= 0 mm
+d:Ge/ActiveCylinder/RMax          	= 0.3 mm
+d:Ge/ActiveCylinder/HL            	= 1.75 mm
+d:Ge/ActiveCylinder/SPhi          	= 0. deg
+dc:Ge/ActiveCylinder/DPhi         	= 360. deg
+dc:Ge/ActiveCylinder/TransZ       	= -0.05 mm   
+s:Ge/ActiveCylinder/Color         	= "Blue"
+s:Ge/ActiveCylinder/DrawingStyle  	= "Solid"
+s:So/Source/Type                       = "Volumetric"
+s:So/Source/Component                  = "ActiveCylinder"
+s:So/Source/ActiveMaterial             = "G4_Ir"
+s:So/Source/BeamParticle               = "gamma"
+#ic:So/Source/NumberOfHistoriesInRun   = 10
+ic:So/Source/MaxNumberOfPointsToSample = 1000000000
+s:So/Source/BeamEnergySpectrumType     = "Discrete" 
+#s:So/Source/BeamEnergySpectrumType    = "Continuous"
+
+##############################################Rivard 2010 spectrum, NNDC, 10 keV cut - Spectra ################################################################
+dv:So/Source/BeamEnergySpectrumValues = 41 8.91 9.44 61.486 63.0 65.122 66.831 71.079 71.414 73.363 75.368 75.749 77.831 110.4 136.3426 176.98 201.3112 205.79430 280.27 283.2668 295.95650 308.45507 316.50618 329.17 374.4852 416.4688 420.52 468.0688 484.5751 485.30 489.06 588.5810 593.49 599.41 604.41105 612.4621 703.87 765.8 884.5365 1061.48 1089.9 1378.20 keV
+
+uv:So/Source/BeamEnergySpectrumWeightsUnscaled = 41 0.0153 0.0396 0.0120 0.0205 0.0263 0.0446 0.00241 0.00466 0.00163 0.00533 0.01025 0.00365 0.000122 0.0020 0.000043 0.00473 0.0334 0.00009 0.00266 0.2872 0.2968 0.8271 0.000174 0.00726 0.00669 0.00069 0.4781 0.03187 0.000023 0.00438 0.04517 0.000421 0.000039 0.0820 0.0534 0.000053 0.000013 0.00291 0.000530 0.000012 0.000012
+
+uv:So/Source/BeamEnergySpectrumWeights = 0.424786820734015 * So/Source/BeamEnergySpectrumWeightsUnscaled
+
+###############################################  Outer source geometry designe##################################################################################
+# Air filling
+s:Ge/AirFilling/Type         	= "TsCylinder"
+s:Ge/AirFilling/Material     	= "G4Air"
+s:Ge/AirFilling/Parent       	= "CapsuleCylinder"	#"Capsule"  Ok check 
+dc:Ge/AirFilling/RMin          = 0 mm
+dc:Ge/AirFilling/RMax          = 0.35 mm
+dc:Ge/AirFilling/HL          	= 1.8 mm
+dc:Ge/AirFilling/SPhi        	= 0. deg
+dc:Ge/AirFilling/DPhi        	= 360. deg
+dc:Ge/AirFilling/TransZ        = -0.03 mm
+s:Ge/AirFilling/Color        	= "White"
+s:Ge/AirFilling/DrawingStyle 	= "Solid"
+
+# Capsule shielding 
+s:Ge/CapsuleCylinder/Type         = "TsCylinder"
+s:Ge/CapsuleCylinder/Material     = "CapsuleSteel"
+s:Ge/CapsuleCylinder/Parent       = "Capsule"		#"CapsuleCylinder"   Ok Check 
+dc:Ge/CapsuleCylinder/RMin         = 0    mm
+dc:Ge/CapsuleCylinder/RMax         = 0.45 mm
+dc:Ge/CapsuleCylinder/HL           = 2.13 mm
+dc:Ge/CapsuleCylinder/SPhi         = 0. deg
+dc:Ge/CapsuleCylinder/DPhi         = 360. deg
+dc:Ge/CapsuleCylinder/TransZ       = 0 mm
+s:Ge/CapsuleCylinder/Color         = "green"
+s:Ge/CapsuleCylinder/DrawingStyle  = "Solid"
+
+# Capsule Cap
+s:Ge/Capsulecap/Type         = "G4Cons"
+s:Ge/Capsulecap/Material     = "CapsuleSteel"
+s:Ge/Capsulecap/Parent       = "Capsule"            # ok Check 
+dc:Ge/Capsulecap/RMin1       = 0.0  mm
+dc:Ge/Capsulecap/RMax1       = 0.45 mm
+dc:Ge/Capsulecap/RMin2       = 0.0  mm
+dc:Ge/Capsulecap/RMax2       = 0.0  mm
+dc:Ge/Capsulecap/HL          = 0.13 mm
+d:Ge/Capsulecap/SPhi         = 0. deg
+dc:Ge/Capsulecap/DPhi        = 360. deg
+dc:Ge/Capsulecap/TransZ      = Ge/CapsuleCylinder/HL + 0.13 mm
+s:Ge/Capsulecap/DrawingStyle = "Solid"
+s:Ge/Capsulecap/Color        = "green"
+
+# Source Cable 
+s:Ge/Cable/Type         	= "TsCylinder"
+s:Ge/Cable/Material     	= "CableSteel"
+s:Ge/Cable/Parent       	= "Capsule"          # ok check 
+d:Ge/Cable/RMin         	= 0     mm
+d:Ge/Cable/RMax         	= 0.45  mm
+d:Ge/Cable/HL           	= 25.0  mm
+d:Ge/Cable/SPhi         	= 0. deg
+dc:Ge/Cable/DPhi         	= 360. deg
+dc:Ge/Cable/TransZ       	= -27.13 mm
+s:Ge/Cable/Color        	= "Yellow"
+s:Ge/Cable/DrawingStyle 	= "solid"
+iv:Gr/Color/shieldingcolor 	= 4 255 255 255 80
+
+##################### Group component, capsule contain active source attached with cable combination ########################################################
+dc:Ge/Capsule/TransX       	= 0 mm
+dc:Ge/Capsule/TransY       	= 0 mm
+dc:Ge/Capsule/TransZ       	= 0 mm
+dc:Ge/Capsule/RotX             = 0. deg    # 90 to arrange co-ordinate system relative to TPS for along y Direction 
+dc:Ge/Capsule/RotY             = 0. deg
+dc:Ge/Capsule/RotZ             = 0. deg
+s:Ge/Capsule/Type   		= "Group"
+#s:Ge/Capsule/Parent 		= "World"	#"AirCylinder" 	#"World"
+
+#######################################################  End of Source ######################################################################################
+
+

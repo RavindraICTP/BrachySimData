@@ -1,4 +1,5 @@
-#                      Model By: Ravindra                              #
+#                      Model By: Ravindra Shende 
+#                      Contact: Ravindrashende02@gmail.com
 #                    Ir-192 GammaMed Plus 232 		         #
 #            Modeling of GammaMed Plus Ir192 Source                    #
 
